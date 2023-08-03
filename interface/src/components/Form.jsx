@@ -82,7 +82,7 @@ export default function Form() {
   const submitForm = (e) => {
     const formData = new FormData(e.target);
     var data = {
-      form: new URLSearchParams(window.location.search).get("form"),
+      form: window.location.hash.split("?")[1].split("=")[1],
     };
     formData.forEach((value, key) => (data[key] = value));
     URL = urls.SUBMIT;
@@ -102,7 +102,7 @@ export default function Form() {
       });
   };
   URL = urls.FORM({
-    form: new URLSearchParams(window.location.search).get("form"),
+    form: window.location.hash.split("?")[1].split("=")[1],
   });
   fetch(URL, {
     method: "GET",
