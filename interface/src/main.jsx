@@ -17,7 +17,7 @@ function Fail() {
   );
 }
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Router basename="/">
+  <Router basename={import.meta.env.DEV ? "/" : "/Product_Sentiment_Analysis/"}>
     <Routes>
       <Route exact path="*" element={<Fail />} />
       <Route exact path="/" element={<App />} />
