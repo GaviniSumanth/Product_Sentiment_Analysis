@@ -14,7 +14,11 @@ def home():
 def predict():
     url = request.form["url"]
     if url:
-        predicted_result = model.predict(url)
+        try:
+            predicted_result = model.predict(url)
+        except Exception as e:
+            print(f"Error:{e}")
+            predicted_result = "Reviews not found"
         return render_template("index.html", result=predicted_result)
     else:
         return render_template("index.html", result="URL can't be empty")
