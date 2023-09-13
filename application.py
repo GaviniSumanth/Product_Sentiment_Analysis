@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import model
-
+import nltk
+nltk.download('wordnet')
 app = Flask(__name__)
 
 
