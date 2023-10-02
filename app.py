@@ -1,13 +1,12 @@
 from flask import Flask, render_template, request
 import model
-import nltk
-nltk.download('wordnet')
+
 app = Flask(__name__)
 
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", result="")
 
 
 @app.route("/predict", methods=["POST"])
@@ -24,5 +23,4 @@ def predict():
         return render_template("index.html", result="URL can't be empty")
 
 
-if __name__ == "__main__":
-    app.run(debug=False)
+app.run(host="0.0.0.0", port=80, debug=True)

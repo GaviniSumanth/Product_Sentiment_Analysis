@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import re
 from nltk import WordNetLemmatizer
+import nltk
+
+nltk.download("wordnet")
 
 with open("models/classifier.model", "rb") as f:
     model = pickle.loads(f.read())
