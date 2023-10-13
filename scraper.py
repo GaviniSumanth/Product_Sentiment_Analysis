@@ -1,22 +1,6 @@
-import pickle
-from numpy import bincount, array, argmax
 import requests
-from bs4 import BeautifulSoup
 import pandas as pd
-import re
-from nltk import WordNetLemmatizer
-import nltk
-
-nltk.download("wordnet")
-
-with open("models/classifier.model", "rb") as f:
-    model = pickle.loads(f.read())
-
-with open("models/vector.model", "rb") as f:
-    vectorizer = pickle.loads(f.read())
-
-with open("models/stopwords.model", "rb") as f:
-    stopwords = pickle.loads(f.read())
+from bs4 import BeautifulSoup
 
 
 def reviewsHtml(url):
@@ -68,37 +52,5 @@ def getReviews(page_url):
     return pd.DataFrame(reviews)
 
 
-def clean(text):
-    lemmatizer = WordNetLemmatizer()
-    text = str(text).encode("ascii", "ignore").decode("ascii")
-    text = str(text).lower()
-    text = re.sub(r"what's", "what is ", text)
-    text = re.sub(r"'s", " ", text)
-    text = re.sub(r"'ve", " have ", text)
-    text = re.sub(r"can't", "can not ", text)
-    text = re.sub(r"n't", " not ", text)
-    text = re.sub(r"i'm", "i am ", text)
-    text = re.sub(r"'re", " are ", text)
-    text = re.sub(r"'d", " would ", text)
-    text = re.sub(r"'ll", " will ", text)
-    text = [word for word in text.split(" ") if word not in stopwords]
-    text = " ".join(text)
-    text = [lemmatizer.lemmatize(word) for word in text.split(" ")]
-    text = " ".join(text)
-    return text
-
-
-def predict(url):
-    df = getReviews(url)
-    df["review"] = df["review"].apply(clean)
-    reviews_corpus = vectorizer.transform(df.review)
-    pred = model.predict(reviews_corpus)
-    counts = bincount((array(pred)))
-    match argmax(counts):
-        case 0:
-            x = "This product is not worth buying."
-        case 1:
-            x = "This product seems to be ok."
-        case 2:
-            x = "The product is worth buying."
-    return x
+page_url = "https://www.amazon.com/dp/B0CBP49GLZ/ref=sspa_dk_detail_2?psc=1&pd_rd_i=B0CBP49GLZ&content-id=amzn1.sym.0d1092dc-81bb-493f-8769-d5c802257e94&s=electronics&sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWwy"
+print(getReviews(page_url))
