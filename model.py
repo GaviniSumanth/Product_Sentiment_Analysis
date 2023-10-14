@@ -48,10 +48,19 @@ def getPagewiseReviews(html_data):
     boxes = html_data.select('div[data-hook="review"]')
     for box in boxes:
         try:
+            stars = (
+                box.select_one('[data-hook="review-star-rating"]')
+                .text.strip()
+                .split(" out")[0]
+            )
+        except Exception as e:
+            stars = "N/A"
+        try:
             review = box.select_one('[data-hook="review-body"]').text.strip()
         except Exception as e:
             review = "N/A"
         data_dict = {
+            "stars": stars,
             "review": review,
         }
         data_dicts.append(data_dict)
@@ -94,11 +103,18 @@ def predict(url):
     reviews_corpus = vectorizer.transform(df.review)
     pred = model.predict(reviews_corpus)
     counts = bincount((array(pred)))
+    df["stars"] = df["stars"].apply(float)
     match argmax(counts):
-        case 0:
-            x = "This product is not worth buying."
-        case 1:
-            x = "This product seems to be ok."
         case 2:
-            x = "The product is worth buying."
-    return x
+            x = 1
+        case _:
+            x = 0
+    if len(df[df["stars"] > 4]) > len(df[df["stars"] <= 4]):
+        x += 1
+    else:
+        x -= 1
+    return (
+        "The product is worth buying."
+        if x >= 1
+        else "This product is not worth buying."
+    )
