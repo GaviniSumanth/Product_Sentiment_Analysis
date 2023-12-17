@@ -113,10 +113,12 @@ def predict(url):
             x = 0
     if len(df[df["stars"] > 4]) > len(df[df["stars"] <= 4]):
         x += 1
+        top_review = df[df["stars"] > 4].iloc[0]["review"]
     else:
         x -= 1
+        top_review = df[df["stars"] <= 4].iloc[0]["review"]
     return (
         "This product is worth buying. You should buy it."
         if x >= 1
         else "This product is not worth buying. Do not buy it."
-    )
+    ), top_review
