@@ -22,5 +22,6 @@ def predict():
     else:
         return render_template("index.html", result="URL can't be empty")
 
-if __name__ =='__main__':
+
+if __name__ == "__main__":
     app.run()

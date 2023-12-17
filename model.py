@@ -7,7 +7,9 @@ import re
 from nltk import WordNetLemmatizer
 import nltk
 
-nltk.download("wordnet")
+downloader = nltk.downloader.Downloader()
+downloader._update_index()
+downloader.download("wordnet")
 
 with open("models/classifier.model", "rb") as f:
     model = pickle.loads(f.read())
@@ -114,7 +116,7 @@ def predict(url):
     else:
         x -= 1
     return (
-        "The product is worth buying."
+        "This product is worth buying. You should buy it."
         if x >= 1
-        else "This product is not worth buying."
+        else "This product is not worth buying. Do not buy it."
     )

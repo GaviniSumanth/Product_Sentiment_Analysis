@@ -1,38 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Sentiment Analysis</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="h-screen flex items-center justify-center bg-slate-300">
-    <form
-      class="bg-white shadow-xl p-10 flex flex-col gap-4 text-sm rounded-md md:w-1/2"
-      action="/predict"
-      method="post"
-    >
-      <h1 class="text-xl text-center">Product Sentiment Analysis</h1>
+</head>
 
-      <div>
-        <label class="text-gray-600 font-bold inline-block pb-2" for="url"
-          >URL:</label
-        >
-        <input
-          class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
-          type="text"
-          name="url"
-          placeholder="Enter URL"
-        />
-      </div>
-      <div>
-        <input
-          class="bg-slate-600 w-full py-2 rounded-md text-white font-bold cursor-pointer hover:bg-slate-800"
-          type="submit"
-          value="Get Analysis"
-        />
-      </div>
-      <div class="text-center">{{result}}</div>
+<body class="h-screen flex items-center justify-center bg-slate-300">
+    <form class="h-screen w-screen bg-white flex flex-col gap-4 items-center justify-center p-10 text-center"
+        action="/predict" method="post">
+        <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/002/238/477/small/feedback-icon-free-vector.jpg" />
+        <h1 class="text-center text-8xl">Product Sentiment Analysis</h1>
+
+        <div class="flex flex-col items-start mt-16">
+            <label class="text-gray-600 font-bold text-xl inline-block" for="url">URL:</label>
+            <br />
+            <input class="border border-gray-400 focus:outline-slate-400 rounded-md  shadow-sm px-5 py-2"
+                style="width: min(50rem, 90vw);" type="text" name="url" placeholder="Enter URL" />
+        </div>
+        <div>
+            <input class="bg-slate-600 p-4 rounded-md text-white font-bold cursor-pointer hover:bg-slate-800"
+                style="width: min(50rem, 90vw);" type="submit" value="Get Analysis" />
+        </div>
+        <div class="text-center">{{result}}</div>
     </form>
-  </body>
+</body>
+
 </html>
